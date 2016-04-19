@@ -11,6 +11,10 @@ a{
 	margin-left: 10px;
 
 }
+a:hover{
+	color: #FF6D30;
+	/* font-size: 22px; */
+}
 
 #menu{
 	background-color: lightgrey;
@@ -32,4 +36,18 @@ a{
 	padding-top: 5px;
 	padding-bottom: 5px;
 	text-align: center;
+}
+
+.registration{
+	margin-top: 20px;
+}
+
+.login{
+	margin-top: 20px;
+}
+
+textarea{
+	width: 300px;
+	height: 100px;
+	resize: none;
 }

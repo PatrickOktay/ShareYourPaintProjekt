@@ -6,12 +6,16 @@
   <link rel="stylesheet" type="text/css" href="/view/css/style.css">
 </head>
 <body>
-<img src="pictures/ShareYourPaint.PNG" alt="ShareYourPaint">
+<img src="/view/css/pictures/ShareYourPaint.PNG" alt="ShareYourPaint">
 <form id="menu">
-  <a href="index.php">Home</a>
-  <a href="me.php">My profile</a>
-  <a href="all.php">All pictures</a>
-  <a href="best.php">The best rated pictures</a>
-  <a href="others.php">Other users profiles</a>
+  <a href="/">Home</a>
+  <a href="/User/me">Me</a>
+  <a href="/Picture/all">All pictures</a>
+  <a href="/Picture/best">The best rated pictures</a>
+  <a href="/User/others">Other users profiles</a>
+</form>
+<form id="menu">
+	<a href="/User/register">Register</a>
+	<a href="/User/login">Login</a>
 </form>
 <div id="main">
