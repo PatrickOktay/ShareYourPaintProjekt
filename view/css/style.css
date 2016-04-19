@@ -1,0 +1,35 @@
+img{
+    max-width: 100%;
+}
+
+a{
+	font-family: "Times New Roman";
+	font-size: 20px;
+	color: black;
+	font-weight: bold;
+	text-decoration: none;
+	margin-left: 10px;
+
+}
+
+#menu{
+	background-color: lightgrey;
+	width: auto;
+	margin: auto;
+	margin-left: 8%;
+	margin-right: 8%;
+	text-align: center;
+	margin-top: 10px;
+	border: 2px solid black;
+}
+
+#main{
+	/* Orange #FF6D30 */
+	background-color: #84B5B7;
+	margin-top: 10px;
+	margin-left: 6%;
+	margin-right: 6%;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	text-align: center;
+}
