@@ -1,5 +1,4 @@
 <?php
-
 require_once 'lib/Model.php';
 
 /**
@@ -15,19 +14,6 @@ class UserModel extends Model
      */
     protected $tableName = 'user';
 
-    /**
-     * Erstellt einen neuen benutzer mit den gegebenen Werten.
-     *
-     * Das Passwort wird vor dem ausführen des Queries noch mit dem SHA1
-     *  Algorythmus gehashed.
-     *
-     * @param $firstName Wert für die Spalte firstName
-     * @param $lastName Wert für die Spalte lastName
-     * @param $email Wert für die Spalte email
-     * @param $password Wert für die Spalte password
-     *
-     * @throws Exception falls das Ausführen des Statements fehlschlägt
-     */
     public function create($username, $password, $description)
     {
         $password = sha1($password);
@@ -45,22 +31,33 @@ class UserModel extends Model
     public function login($username, $password)
     {
         $password = sha1($password);
+        //echo $password;
+        //echo $username;
 
-        $query = "SELECT id FROM $this->tableName WHERE username =? AND password =?";
-
+        $query = "SELECT username, password FROM $this->tableName WHERE username=? AND password=?";
         $statement = ConnectionHandler::getConnection()->prepare($query);
         $statement->bind_param('ss', $username, $password);
         $statement->execute();
+        $statement->store_result();
 
-        $result = $statement->get_result();
-        $row = $result->fetch_object();
+        $statement->bind_result($username, $pw);
+        $statement->fetch();
+
+        if ($statement->num_rows == 1)
+        {
+            if ($pw == $password)
+            {
+                $_SESSION['user'] = $username;
+            } 
+            else
+            {
+                echo "Login fehlgeschlagen!";
+            }
+        }
         
-        if (!$result) {
-            echo "You are not registred yet!";
+        else
+        {
+            echo "Login fehlgeschlagen!";
         }
-        else{
-            echo "Welcome!";
-        }
-        $result->close();
     }
 }

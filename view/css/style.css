@@ -27,8 +27,11 @@ a:hover{
 }
 
 #main{
-	/* Orange #FF6D30 */
-	background-color: #84B5B7;
+	/*
+	Orange #FF6D30 
+	Blue #84B5B7
+	*/
+	background-color: darkgrey;
 	margin-top: 10px;
 	margin-left: 6%;
 	margin-right: 6%;
@@ -49,4 +52,8 @@ textarea{
 	width: 300px;
 	height: 100px;
 	resize: none;
+}
+
+body{
+	background-color: lightgrey;
 }

@@ -15,7 +15,18 @@
   <a href="/User/others">Other users profiles</a>
 </form>
 <form id="menu">
-	<a href="/User/register">Register</a>
-	<a href="/User/login">Login</a>
+  <?php
+    if(isset($_SESSION["user"]))
+    {
+      //$username = $_SESSION["user"];
+      echo '<a href="/User/logout">Logout</a>';
+      echo '<p>Sie sind angemeldet als</p>';
+    }
+    else
+    {
+      echo '<a href="/User/register">Register</a>';
+      echo '<a href="/User/login">Login</a>';
+    }
+  ?>
 </form>
 <div id="main">
