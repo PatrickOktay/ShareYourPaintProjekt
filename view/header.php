@@ -7,6 +7,7 @@
 </head>
 <body>
 <img src="/view/css/pictures/ShareYourPaint.PNG" alt="ShareYourPaint">
+<h1>Sharing is Caring</h1>
 <form id="menu">
   <a href="/">Home</a>
   <a href="/User/me">Me</a>
@@ -18,9 +19,9 @@
   <?php
     if(isset($_SESSION["user"]))
     {
-      //$username = $_SESSION["user"];
+     $username = $_SESSION['user'];
       echo '<a href="/User/logout">Logout</a>';
-      echo '<p>Sie sind angemeldet als</p>';
+      echo '<p>Sie sind angemeldet als '.$username.'</p>';
     }
     else
     {
