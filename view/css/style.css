@@ -17,14 +17,13 @@ a:hover{
 }
 
 #menu{
-	background-color: lightgrey;
+	background-color: darkgrey;
 	width: auto;
 	margin: auto;
-	margin-left: 8%;
-	margin-right: 8%;
 	text-align: center;
 	margin-top: 10px;
-	border: 2px solid black;
+	border-top: 2px solid black;
+	border-bottom: 2px solid black;
 }
 
 #main{
