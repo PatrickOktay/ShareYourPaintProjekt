@@ -41,4 +41,26 @@ class UserModel extends Model
             throw new Exception($statement->error);
         }
     }
+
+    public function login($username, $password)
+    {
+        $password = sha1($password);
+
+        $query = "SELECT id FROM $this->tableName WHERE username =? AND password =?";
+
+        $statement = ConnectionHandler::getConnection()->prepare($query);
+        $statement->bind_param('ss', $username, $password);
+        $statement->execute();
+
+        $result = $statement->get_result();
+        $row = $result->fetch_object();
+        
+        if (!$result) {
+            echo "You are not registred yet!";
+        }
+        else{
+            echo "Welcome!";
+        }
+        $result->close();
+    }
 }

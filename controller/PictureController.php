@@ -7,6 +7,12 @@ require_once 'model/UserModel.php';
  */
 class PictureController
 {
+    public function index()
+    {
+        $view = new View('picture_all');
+        $view->display();
+    }
+
     public function all()
     {
         $view = new View('picture_all');

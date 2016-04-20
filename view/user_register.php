@@ -5,9 +5,9 @@
 		<input type="password" id="password" name="password" placeholder="Password (at least 5 characters)" size="30">
 		<br>
 		<input type="password" id="password2" name="password2" placeholder="Repeat password" size="30">
-		<br><br>
-		<textarea type="text" id="description" name="description" placeholder="If you want you can write a description of you :)"></textarea>
-		<br><br>
+		<br>
+		<textarea type="text" id="description" name="description" placeholder="If you want you can write a description about you :)"></textarea>
+		<br>
 		<button type="button" onclick="check()">Sign in</button>
 		<button type="reset" onclick="reset()">Reset</button>
 	</form>

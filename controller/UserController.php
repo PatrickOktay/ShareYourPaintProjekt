@@ -7,6 +7,12 @@ require_once 'model/UserModel.php';
  */
 class UserController
 {
+    public function index()
+    {
+        $view = new View('user_me');
+        $view->display();
+    }
+
     public function register()
     {
         $view = new View('user_register');
@@ -21,20 +27,27 @@ class UserController
 
     public function saveUser()
     {
-            $username = $_POST['username'];
-            $password = $_POST['password'];
-            $description = $_POST['description'];
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        $description = $_POST['description'];
 
-            $userModel = new UserModel();
-            $userModel->create($username, $password, $description);
-            
-            $view = new View('user_me');
-            $view->display();
+        $userModel = new UserModel();
+        $userModel->create($username, $password, $description);
+
+        $view = new View('user_me');
+        $view->display();
     }
 
     public function loginUser()
     {
+        $username = $_POST['loginname'];
+        $password = $_POST['logpassword'];
 
+        $userModel = new UserModel();
+        $userModel->login($username, $password);
+
+        $view = new View('user_me');
+        $view->display();
     }
 
     public function me(){
@@ -50,16 +63,7 @@ class UserController
 
 
 
-    public function index()
-    {
-        $userModel = new UserModel();
 
-        $view = new View('user_index');
-        $view->title = 'Benutzer';
-        $view->heading = 'Benutzer';
-        $view->users = $userModel->readAll();
-        $view->display();
-    }
 
     public function create()
     {
