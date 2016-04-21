@@ -39,11 +39,22 @@ class UserController
         $password = $_POST['password'];
         $description = $_POST['description'];
 
-        $userModel = new UserModel();
-        $userModel->create($username, $password, $description);
+        $check = new UserModel();
 
-        $view = new View('user_me');
-        $view->display();
+        if ($check->checkexist($username))
+        {
+            $userModel = new UserModel();
+            $userModel->create($username, $password, $description);
+
+            $view = new View('user_me');
+            $view->display();
+        }
+        else
+        {
+            echo "That username alreasy exists. Please choose another one.";
+            $view = new View('user_register');
+            $view->display();
+        }
     }
 
     public function loginUser()
@@ -82,11 +93,43 @@ class UserController
 
     public function others()
     {
+        $userModel = new UserModel();
+        $userModel->others();
+
+        $username = $_POST['username'];
+        $username = $_POST['description'];
+
         $view = new View('user_others');
         $view->display();
     }
 
+    public function mypictures()
+    {
+        if(isset($_SESSION["user"]))
+        {
+            $view = new View('user_mypictures');
+            $view->display();
+        }
+        else
+        {
+            $view = new View('user_login');
+            $view->display();
+        }
+    }
 
+    public function myprofile()
+    {
+        if(isset($_SESSION["user"]))
+        {
+            $view = new View('user_myprofile');
+            $view->display();
+        }
+        else
+        {
+            $view = new View('user_login');
+            $view->display();
+        }
+    }
 
 
 

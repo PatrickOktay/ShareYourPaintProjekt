@@ -26,6 +26,29 @@ class UserModel extends Model
         if (!$statement->execute()) {
             throw new Exception($statement->error);
         }
+        $_SESSION['user'] = $username;
+    }
+
+    public function checkexist($username)
+    {
+        $query = "SELECT username, password FROM $this->tableName WHERE username=?";
+        $statement = ConnectionHandler::getConnection()->prepare($query);
+        $statement->bind_param('s', $username);
+        $statement->execute();
+        $statement->store_result();
+
+        $statement->bind_result($username, $pw);
+        $statement->fetch();
+
+        if ($statement->num_rows == 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+            
     }
 
     public function login($username, $password)
@@ -59,5 +82,40 @@ class UserModel extends Model
         {
             echo "Login fehlgeschlagen!";
         }
+    }
+    public function others()
+    {
+        $query = "SELECT username, description FROM $this->tableName";
+        $statement = ConnectionHandler::getConnection()->prepare($query);
+        $statement->execute();
+        $statement->store_result();
+        $statement->bind_result($username, $description);
+
+        $query2 = "SELECT count(id) FROM $this->tableName";
+        $statement2 = ConnectionHandler::getConnection()->prepare($query2);
+        $statement2->execute();
+        $statement2->store_result();
+        $statement2->bind_result($idcount);
+        $statement2->fetch();
+
+        for ($i=0; $i < $idcount; $i++) {
+            $statement->fetch();
+            $_POST['username'] = $username;
+            $_POST['description'] = $description;
+        }
+    }
+    public function userid()
+    {
+        $username = $_SESSION['user'];
+        $query = "SELECT id FROM $this->tableName WHERE username =?";
+        $statement = ConnectionHandler::getConnection()->prepare($query);
+        $statement->bind_param('s', $username);
+
+        $statement->execute();
+        $statement->store_result();
+        $statement->bind_result($owner);
+        $statement->fetch();
+
+        return $owner;
     }
 }

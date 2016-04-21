@@ -7,7 +7,7 @@ require_once 'lib/Model.php';
  *
  * Die Ausführliche Dokumentation zu Models findest du in der Model Klasse.
  */
-class UserModel extends Model
+class PictureModel extends Model
 {
     /**
      * Diese Variable wird von der Klasse Model verwendet, um generische
@@ -22,32 +22,35 @@ class UserModel extends Model
      *  Algorythmus gehashed.
      *
      * @param $firstName Wert für die Spalte firstName
+     * @param $lastName Wert für die Spalte lastName
+     * @param $email Wert für die Spalte email
+     * @param $password Wert für die Spalte password
      *
      * @throws Exception falls das Ausführen des Statements fehlschlägt
      */
     public function CountPictures()
     {
         $query = "SELECT count(id) FROM $this->tableName";
-
         $statement = ConnectionHandler::getConnection()->prepare($query);
         $statement->execute();
 
-        $result = $statement->get_result();
-        return $result;
+        $statement->store_result();
+        $statement->bind_result($picscount);
+        $statement->fetch();
 
+        return $picscount;
     }
-
     public function uploadInDB($title, $type, $description, $owner)
     {
         $rating = 0;
 
-        $query = "INSERT INTO $this->tableName (title, type, description, rating, calendar, owner) VALUES (?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO $this->tableName (title, type, description, rating, owner) VALUES (?, ?, ?, ?, ?)";
 
         $statement = ConnectionHandler::getConnection()->prepare($query);
-        $statement->bind_param('sssidi', $title, $type, $description, $rating, date(), $owner);
-
+        $statement->bind_param('sssii', $title, $type, $description, $rating, $owner);
         if (!$statement->execute()) {
             throw new Exception($statement->error);
         }
+
     }
 }
