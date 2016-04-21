@@ -1,9 +1,76 @@
+#menu{
+	background-color: lightgrey;
+	width: 84%;
+	margin-left: 8%;
+	margin-right: 8%;
+	margin-top: 10px;
+	padding: 0;
+	border: 2px solid black;
+	float: left;
+}
+
+#menuleft{
+	float:left;
+}
+#menuright{
+	float:right;
+}
+
+nav ul {
+	list-style: none;
+}
+
+nav ul li {
+	float: left;
+	margin-left: 40pt;
+	margin-right: 40pt;
+}
+
+nav ul li ul li {
+	float: none;
+	margin:0;
+	padding-left: 2pt;
+	padding-right: 2pt;
+	width:auto;
+}
+
+nav ul li ul {
+	display: none;
+	margin:0;
+	padding: 0;
+	position: absolute;
+}
+
+nav ul li a {
+	margin:2pt;
+	display: block;
+}
+
+
+ nav li:hover ul {
+	display: block;
+	background-color: lightgray;
+	border: 2px solid black;
+ }
+
+
+
+#main{
+	/* Orange #FF6D30 */
+	background-color: #84B5B7;
+	width: 84%;
+	margin-left: 8%;
+	margin-right: 8%;
+	margin-top: 10px;
+	text-align: center;
+	float: left;
+}
+
+
 img{
     max-width: 100%;
-    max-height: 200px;
-    margin: auto;
-    position: center;
 }
+
 a{
 	font-family: "Times New Roman";
 	font-size: 20px;
@@ -11,80 +78,9 @@ a{
 	font-weight: bold;
 	text-decoration: none;
 	margin-left: 10px;
+
 }
 a:hover{
 	color: #FF6D30;
 	/* font-size: 22px; */
-}
-#menu{
-	background-color: darkgrey;
-	width: auto;
-	margin: auto;
-	text-align: center;
-	margin-top: 10px;
-	border-top: 2px solid black;
-	border-bottom: 2px solid black;
-}
-#main{
-	/*
-	Orange #FF6D30 
-	Blue #84B5B7
-	*/
-	background-color: darkgrey;
-	margin-top: 10px;
-	margin-left: 6%;
-	margin-right: 6%;
-	padding-top: 5px;
-	padding-bottom: 5px;
-	text-align: center;
-}
-#others{
-	border: 2px outset;
-	max-width: 400px;
-	margin: auto;
-	margin-bottom: 10px;
-	background-color: grey;
-}
-.registration{
-	margin-top: 20px;
-}
-.login{
-	margin-top: 20px;
-}
-textarea{
-	width: 300px;
-	height: 100px;
-	resize: none;
-	border-radius: 8px;
-	border: 2px inset;
-}
-textarea#seedescription{
-	height: auto;
-	width: 250px;
-	margin-bottom: 10px;
-}
-body{
-	background-color: lightgrey;
-}
-input{
-	margin-bottom: 6px;
-	height: 20px;
-	border-radius: 8px;
-	border: 2px inset;
-	text-align: center;
-}
-button{
-	border-radius: 8px;
-	border: 2px inset;
-	background-color: white;
-	font-size: 16px;
-	text-align: center;
-	margin-top: 10px;
-	margin-bottom: 10px;
-}
-button:hover{
-	background-color: #FF6D30;
-}
-h2{
-	font-family: 'Times New Roman';
 }

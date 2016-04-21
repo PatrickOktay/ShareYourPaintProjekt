@@ -6,27 +6,32 @@
   <link rel="stylesheet" type="text/css" href="/view/css/style.css">
 </head>
 <body>
-<img src="/view/css/pictures/web/ShareYourPaint.PNG" alt="ShareYourPaint">
-<form id="menu">
-  <a href="/">Home</a>
-  <a href="/User/me">Me</a>
-  <a href="/Picture/all">All pictures</a>
-  <a href="/Picture/best">The best rated pictures</a>
-  <a href="/User/others">Other users profiles</a>
-</form>
-<form id="menu">
-  <?php
-    if(isset($_SESSION["user"]))
-    {
-     $username = $_SESSION['user'];
-      echo '<a href="/User/logout">Logout</a>';
-      echo '<p>Sie sind angemeldet als '.$username.'</p>';
-    }
-    else
-    {
-      echo '<a href="/User/register">Register</a>';
-      echo '<a href="/User/login">Login</a>';
-    }
-  ?>
-</form>
-<div id="main">
+  <div id="menu">
+    <div id="menuleft">
+    <nav id="left">
+        <ul>
+          <li><a href="/">A</a></li>
+          <li><a href="/">B</a>
+            <ul>
+              <li><a href="/">B1</a></li>
+              <li><a href="/">B2</a></li>
+            </ul></li>
+            <li><a href="/">C</a>
+              <ul>
+                <li><a href="/">C1</a></li>
+                <li><a href="/">C2</a></li>
+              </ul></li>
+            </ul>
+          </nav>
+        </div>
+        <div id="menuright">
+          <nav id="right">
+            <ul>
+              <li><a href="/">D</a></li>
+              </ul>
+            </nav>
+
+          </div>
+        </div>
+
+        <div id="main">
