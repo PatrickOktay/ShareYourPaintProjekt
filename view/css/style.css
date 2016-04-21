@@ -1,7 +1,7 @@
 img{
     max-width: 100%;
-    margin-bottom: -20px;
 }
+
 a{
 	font-family: "Times New Roman";
 	font-size: 20px;
@@ -9,26 +9,27 @@ a{
 	font-weight: bold;
 	text-decoration: none;
 	margin-left: 10px;
+
 }
 a:hover{
 	color: #FF6D30;
 	/* font-size: 22px; */
 }
+
 #menu{
-	background-color: darkgrey;
+	background-color: lightgrey;
 	width: auto;
 	margin: auto;
+	margin-left: 8%;
+	margin-right: 8%;
 	text-align: center;
 	margin-top: 10px;
-	border-top: 2px solid black;
-	border-bottom: 2px solid black;
+	border: 2px solid black;
 }
+
 #main{
-	/*
-	Orange #FF6D30 
-	Blue #84B5B7
-	*/
-	background-color: darkgrey;
+	/* Orange #FF6D30 */
+	background-color: #84B5B7;
 	margin-top: 10px;
 	margin-left: 6%;
 	margin-right: 6%;
@@ -36,28 +37,17 @@ a:hover{
 	padding-bottom: 5px;
 	text-align: center;
 }
+
 .registration{
 	margin-top: 20px;
 }
+
 .login{
 	margin-top: 20px;
 }
+
 textarea{
 	width: 300px;
 	height: 100px;
 	resize: none;
-	border-radius: 8px;
-}
-body{
-	background-color: lightgrey;
-}
-h1{
-	text-align: center;
-	font-size: 30px;
-}
-input{
-	margin-bottom: 6px;
-	height: 20px;
-	border-radius: 8px;
-	text-align: center;
 }
