@@ -86,4 +86,22 @@ class View
         require $this->viewfile;
         require './view/footer.php';
     }
+    public function header()
+    {
+        extract($this->properties);
+
+        require './view/header.php';
+    }
+    public function content()
+    {
+        extract($this->properties);
+
+        require $this->viewfile;
+    }
+    public function footer()
+    {
+        extract($this->properties);
+
+        require './view/footer.php';
+    }
 }

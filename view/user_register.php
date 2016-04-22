@@ -1,13 +1,13 @@
 <div class="registration">
 <h2>Registration</h2>
 	<form id="register" name="register" method="post" action="/User/saveUser">
-		<input id="username" name="username" type="text" maxlength="12" placeholder="Username (at least 4 characters)" size="30" required="true">
+		<input id="username" name="username" type="text" maxlength="30" placeholder="Username (at least 4 characters)" size="30" required="true">
 		<br>
-		<input type="password" id="password" name="password" placeholder="Password (at least 5 characters)" size="30" required="true">
+		<input type="password" id="password" name="password" maxlength="30" placeholder="Password (at least 5 characters)" size="30" required="true">
 		<br>
-		<input type="password" id="password2" name="password2" placeholder="Repeat password" size="30" required="true">
+		<input maxlength="30"type="password" id="password2" name="password2" placeholder="Repeat password" size="30" required="true">
 		<br>
-		<textarea type="text" id="description" name="description" placeholder="If you want you can write a description about you :)"></textarea>
+		<textarea maxlength="300" type="text" id="description" name="description" placeholder="If you want you can write a description about you :)"></textarea>
 		<br>
 		<button type="button" onclick="check()">Sign in</button>
 		<button type="reset" onclick="reset()">Reset</button>

@@ -57,13 +57,13 @@ class UserModel extends Model
         //echo $password;
         //echo $username;
 
-        $query = "SELECT username, password FROM $this->tableName WHERE username=? AND password=?";
+        $query = "SELECT id, username, password FROM $this->tableName WHERE username=? AND password=?";
         $statement = ConnectionHandler::getConnection()->prepare($query);
         $statement->bind_param('ss', $username, $password);
         $statement->execute();
         $statement->store_result();
 
-        $statement->bind_result($username, $pw);
+        $statement->bind_result($id, $username, $pw);
         $statement->fetch();
 
         if ($statement->num_rows == 1)
@@ -74,18 +74,18 @@ class UserModel extends Model
             } 
             else
             {
-                echo "Login fehlgeschlagen!";
+                echo "<div id=\"error\"><p>Login failed!</p></div>";
             }
         }
         
         else
         {
-            echo "Login fehlgeschlagen!";
+            echo "<div id=\"error\"><p>Login failed!</p></div>";
         }
     }
     public function others()
     {
-        $query = "SELECT username, description FROM $this->tableName";
+        $query = "SELECT username, description FROM $this->tableName ORDER BY id DESC";
         $statement = ConnectionHandler::getConnection()->prepare($query);
         $statement->execute();
         $statement->store_result();
@@ -98,18 +98,40 @@ class UserModel extends Model
         $statement2->bind_result($idcount);
         $statement2->fetch();
 
+        $view = new View('user_others');
+        $view->header();
+        echo'<h2>All users</h2>';
+
         for ($i=0; $i < $idcount; $i++) {
             $statement->fetch();
             $_POST['username'] = $username;
             $_POST['description'] = $description;
+            $view = new View('user_others');
+            $view->content();
         }
     }
     public function userid()
     {
-        $username = $_SESSION['user'];
-        $query = "SELECT id FROM $this->tableName WHERE username =?";
+        if (isset($_SESSION["user"]))
+        {
+            $username = $_SESSION['user'];
+            $query = "SELECT id FROM $this->tableName WHERE username =?";
+            $statement = ConnectionHandler::getConnection()->prepare($query);
+            $statement->bind_param('s', $username);
+
+            $statement->execute();
+            $statement->store_result();
+            $statement->bind_result($owner);
+            $statement->fetch();
+
+            return $owner;
+        }
+    }
+    public function owner($owner)
+    {
+        $query = "SELECT username FROM user WHERE id=?";
         $statement = ConnectionHandler::getConnection()->prepare($query);
-        $statement->bind_param('s', $username);
+        $statement->bind_param('i', $owner);
 
         $statement->execute();
         $statement->store_result();
@@ -117,5 +139,31 @@ class UserModel extends Model
         $statement->fetch();
 
         return $owner;
+    }
+    public function changeprofiledescription($description)
+    {
+        $userModel = new UserModel();
+        $id=($userModel->userid());
+
+        $query = "UPDATE $this->tableName SET description=? WHERE id=?";
+        $statement = ConnectionHandler::getConnection()->prepare($query);
+        $statement->bind_param('si', $description, $id);
+        $statement->execute();
+    }
+    public function description()
+    {
+        $userModel = new UserModel();
+        $id=($userModel->userid());
+
+        $query = "SELECT description FROM user WHERE id=?";
+        $statement = ConnectionHandler::getConnection()->prepare($query);
+        $statement->bind_param('i', $id);
+
+        $statement->execute();
+        $statement->store_result();
+        $statement->bind_result($description);
+        $statement->fetch();
+
+        return $description;
     }
 }

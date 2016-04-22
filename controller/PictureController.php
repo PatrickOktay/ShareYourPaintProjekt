@@ -10,20 +10,45 @@ class PictureController
 {
     public function index()
     {
-        $view = new View('picture_all');
-        $view->display();
+        header("Location: /Picture/all");
     }
 
     public function all()
     {
+        $pictureModel = new PictureModel();
+        $pictureModel->showAll();
+
+        $id = $_POST['id'];
+        $type = $_POST['type'];
+        $title = $_POST['title'];
+        $description = $_POST['description'];
+        $calender = $_POST['calender'];
+        $owner = $_POST['owner'];
+        $ownerid = $_POST['ownerid'];
+
+        $user = $_POST['user'];
+
         $view = new View('picture_all');
-        $view->display();
+        $view->footer();
     }
 
     public function best()
     {
+        $pictureModel = new PictureModel();
+        $pictureModel->showbest();
+
+        $id = $_POST['id'];
+        $type = $_POST['type'];
+        $title = $_POST['title'];
+        $description = $_POST['description'];
+        $calender = $_POST['calender'];
+        $owner = $_POST['owner'];
+        $ownerid = $_POST['ownerid'];
+
+        $user = $_POST['user'];
+
         $view = new View('picture_best');
-        $view->display();
+        $view->footer();
     }
     public function upload()
     {
@@ -35,9 +60,9 @@ class PictureController
         if($_FILES["img"]["type"] && $_POST["titel"] !=""){
 
             //nötige variabeln deffinieren/auslesen
-            $title=$_POST["titel"];
+            $title=htmlspecialchars($_POST["titel"]);
             $filetype='.'.$filetype[1];
-            $description=$_POST["desc"];
+            $description=htmlspecialchars($_POST["desc"]);
 
             //id des Benutzers herausfinden
             $userModel = new UserModel();
@@ -45,17 +70,39 @@ class PictureController
 
             if(array_search($filetype, $okTypes)){
                 $picturemodel = new PictureModel();
-                $picturemodel->uploadInDB($title, $filetype, $description, $owner);//speichern des Pfades in der Datenbank
-                $pictureid=($picturemodel->CountPictures());
+                $pictureid=($picturemodel->maxId());
+                $pictureid++;
+
+                $type=$pictureid . $filetype;
+                $picturemodel->uploadInDB($title, $type, $description, $owner);//speichern des Pfades in der Datenbank
                 move_uploaded_file($_FILES['img']['tmp_name'], './view/css/pictures/uploads/'.$pictureid.$filetype); //speichern des bildes
             }
-            else echo "Es sind nur png jpg jpeg und gif erlaubt";
+            else echo "<div id=\"error\"><p>Only jpegs and gifs allowed!</p></div>";
         }
-        else echo "Bitte Datei auswählen und Titel eingeben.";
+        else echo "<div id=\"error\"><p>Please choose a title and a picture!</p></div>";
     
 
-        $view = new View('picture_all');
-        $view->display();
+        header("Location: /Picture/all");
 
+    }
+    public function rate()
+    {
+        if(isset($_SESSION["user"]))
+        {
+            $picture = $_POST['id'];
+            $userModel = new UserModel();
+            $user=($userModel->userid());
+            $pictureModel = new PictureModel();
+            $pictureModel->rate($picture, $user);
+            header("Location: /Picture/all#$picture");
+        }
+    }
+    public function delete()
+    {
+        $id = $_POST['id'];
+        $pictureModel = new PictureModel();
+        $pictureModel->delete($id);
+
+        header("Location: /Picture/all#$picture");
     }
 }

@@ -9,8 +9,7 @@ class UserController
 {
     public function index()
     {
-        $view = new View('user_me');
-        $view->display();
+        header("Location: /User/me");
     }
 
     public function register()
@@ -35,9 +34,23 @@ class UserController
 
     public function saveUser()
     {
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        $description = $_POST['description'];
+        $username = htmlspecialchars($_POST['username']);
+        $password = htmlspecialchars($_POST['password']);
+        $password2 = htmlspecialchars($_POST['password2']);
+        $description = htmlspecialchars($_POST['description']);
+
+        if (strlen($username) < 4)
+        {
+            echo "<div id=\"error\"><p>Username is too short!</p></div>";
+        }
+        if (strlen($password) < 5)
+        {
+            echo "<div id=\"error\"><p>Password is too short!</p></div>";
+        }
+        if(!$password == $password2)
+        {
+            echo "<div id=\"error\"><p>The passwords don't match!</p></div>";
+        }
 
         $check = new UserModel();
 
@@ -51,7 +64,7 @@ class UserController
         }
         else
         {
-            echo "That username alreasy exists. Please choose another one.";
+            echo "<div id=\"errorregister\"><p>That username alreasy exists. Please choose another one.</p></div>";
             $view = new View('user_register');
             $view->display();
         }
@@ -59,16 +72,17 @@ class UserController
 
     public function loginUser()
     {
-        $username = $_POST['loginname'];
-        $password = $_POST['logpassword'];
+        $username = htmlspecialchars($_POST['loginname']);
+        $password = htmlspecialchars($_POST['logpassword']);
 
         $userModel = new UserModel();
         $userModel->login($username, $password);
 
         if(isset($_SESSION["user"]))
         {
-            $view = new View('user_me');
-            $view->display();
+            //$view = new View('user_me');
+            //$view->display();
+            header("Location: /User/me");
         }
         else
         {
@@ -81,6 +95,11 @@ class UserController
     {
         if(isset($_SESSION["user"]))
         {
+            $userModel = new UserModel();
+            $description=($userModel->description());
+
+            $_POST['description'] = $description;
+
             $view = new View('user_me');
             $view->display();
         }
@@ -96,73 +115,23 @@ class UserController
         $userModel = new UserModel();
         $userModel->others();
 
-        $username = $_POST['username'];
-        $username = $_POST['description'];
-
         $view = new View('user_others');
-        $view->display();
+        $view->footer();
     }
-
-    public function mypictures()
+    public function changedescription()
     {
         if(isset($_SESSION["user"]))
         {
-            $view = new View('user_mypictures');
-            $view->display();
-        }
-        else
-        {
-            $view = new View('user_login');
-            $view->display();
-        }
-    }
-
-    public function myprofile()
-    {
-        if(isset($_SESSION["user"]))
-        {
-            $view = new View('user_myprofile');
-            $view->display();
-        }
-        else
-        {
-            $view = new View('user_login');
-            $view->display();
-        }
-    }
-
-
-
-    public function create()
-    {
-        $view = new View('user_create');
-        $view->title = 'Benutzer erstellen';
-        $view->heading = 'Benutzer erstellen';
-        $view->display();
-    }
-
-    public function doCreate()
-    {
-        if ($_POST['send']) {
-            $firstName = $_POST['firstName'];
-            $lastName = $_POST['lastName'];
-            $email = $_POST['email'];
-            $password = $_POST['password'];
-
+            $description=htmlspecialchars($_POST["description"]);
             $userModel = new UserModel();
-            $userModel->create($firstName, $lastName, $email, $password);
+            $userModel->changeprofiledescription($description);
+            $view = new View('user_me');
+            $view->display();
         }
-
-        // Anfrage an die URI /user weiterleiten (HTTP 302)
-        header('Location: /user');
-    }
-
-    public function delete()
-    {
-        $userModel = new UserModel();
-        $userModel->deleteById($_GET['id']);
-
-        // Anfrage an die URI /user weiterleiten (HTTP 302)
-        header('Location: /user');
+        else
+        {
+            $view = new View('user_login');
+            $view->display();
+        }
     }
 }
