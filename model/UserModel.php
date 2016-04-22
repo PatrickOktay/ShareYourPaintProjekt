@@ -13,7 +13,7 @@ class UserModel extends Model
      * Funktionen zur Verfügung zu stellen.
      */
     protected $tableName = 'user';
-
+    //ein User wird abgespeichert
     public function create($username, $password, $description)
     {
         $password = sha1($password);
@@ -28,7 +28,7 @@ class UserModel extends Model
         }
         $_SESSION['user'] = $username;
     }
-
+    //es wird überprüft ob es schon einen User mit dem username gibt
     public function checkexist($username)
     {
         $query = "SELECT username, password FROM $this->tableName WHERE username=?";
@@ -50,12 +50,10 @@ class UserModel extends Model
         }
             
     }
-
+    //wenn der User existiert wird er eingeloggt
     public function login($username, $password)
     {
         $password = sha1($password);
-        //echo $password;
-        //echo $username;
 
         $query = "SELECT id, username, password FROM $this->tableName WHERE username=? AND password=?";
         $statement = ConnectionHandler::getConnection()->prepare($query);
@@ -65,24 +63,27 @@ class UserModel extends Model
 
         $statement->bind_result($id, $username, $pw);
         $statement->fetch();
-
+        //wenn der username existiert
         if ($statement->num_rows == 1)
         {
+            //wenn das passwort gleich ist
             if ($pw == $password)
             {
                 $_SESSION['user'] = $username;
             } 
+            //wenn es nicht gleicht ist
             else
             {
-                echo "<div id=\"error\"><p>Login failed!</p></div>";
+                echo "<div id=\"error\"><p>Wrong password!</p></div>";
             }
         }
-        
+        // wenn der User nicht existiert
         else
         {
             echo "<div id=\"error\"><p>Login failed!</p></div>";
         }
     }
+    //alle user werden ausgegeben
     public function others()
     {
         $query = "SELECT username, description FROM $this->tableName ORDER BY id DESC";
@@ -110,6 +111,7 @@ class UserModel extends Model
             $view->content();
         }
     }
+    //die id vom eingeloggten User wird ermittelt
     public function userid()
     {
         if (isset($_SESSION["user"]))
@@ -127,6 +129,7 @@ class UserModel extends Model
             return $owner;
         }
     }
+    //sucht den Namen des Users mithilfe der id
     public function owner($owner)
     {
         $query = "SELECT username FROM user WHERE id=?";
@@ -140,6 +143,7 @@ class UserModel extends Model
 
         return $owner;
     }
+    //ändert die Profilbeschreibung
     public function changeprofiledescription($description)
     {
         $userModel = new UserModel();
@@ -150,6 +154,7 @@ class UserModel extends Model
         $statement->bind_param('si', $description, $id);
         $statement->execute();
     }
+    //sucht die Profilbeschreibugn von einem bestimmten User
     public function description()
     {
         $userModel = new UserModel();

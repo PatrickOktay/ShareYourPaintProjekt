@@ -28,6 +28,7 @@ class PictureModel extends Model
      *
      * @throws Exception falls das Ausführen des Statements fehlschlägt
      */
+    //zählt alle Bilder
     public function CountPictures()
     {
         $query = "SELECT count(id) FROM $this->tableName";
@@ -40,6 +41,7 @@ class PictureModel extends Model
 
         return $picscount;
     }
+    //sucht die grösste id der Bilder
     public function maxId()
     {
         $query = "SELECT MAX(id) FROM $this->tableName";
@@ -52,6 +54,7 @@ class PictureModel extends Model
         return $pictureid;
 
     }
+    //speichert die Bildinfos in die Datenbank 
     public function uploadInDB($title, $type, $description, $owner)
     {
         $rating = 0;
@@ -65,6 +68,7 @@ class PictureModel extends Model
         }
 
     }
+    //zeigt alle Bilder an
     public function showAll()
     {
         $query = "SELECT * FROM $this->tableName ORDER BY id DESC";
@@ -107,6 +111,7 @@ class PictureModel extends Model
             $view->content();
         }
     }
+    //zeigt die best bewerteten Bilder an
     public function showbest()
     {
         $query = "SELECT * FROM $this->tableName ORDER BY rating DESC";
@@ -149,6 +154,7 @@ class PictureModel extends Model
             $view->content();
         }
     }
+    //speichert Bewertung in dritte Tabelle
     public function rate($picture, $user)
     {
         $query = "SELECT id FROM rating WHERE evaluator =? AND picture =?";
@@ -177,6 +183,7 @@ class PictureModel extends Model
             $pictureModel->updaterating($picture);
         }
     }
+    //speichert Bewertung in die picture Tabelle
     public function updaterating($picture)
     {
         $pictureModel = new PictureModel();
@@ -186,7 +193,8 @@ class PictureModel extends Model
         $statement = ConnectionHandler::getConnection()->prepare($query);
         $statement->bind_param('ii', $rating, $picture);
         $statement->execute();
-    } 
+    }
+    //zeigt die Bewertung von dem gesuchten Bild
     public function rating($id)
     {
         $query = "SELECT count(id) FROM rating WHERE picture=?";
@@ -199,6 +207,7 @@ class PictureModel extends Model
         $statement->fetch();
         return $rating;
     }
+    // löscht das gesuchte Bild
     public function delete($id)
     {
         $query = "DELETE FROM $this->tableName WHERE id=?";

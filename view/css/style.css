@@ -136,3 +136,16 @@ h2{
 	width: 400px;
 	margin: auto;
 }
+#errorpic{
+	display: block;
+	text-align: center;
+	width: 100%;
+	margin: auto;
+	margin-bottom: 20px;
+}
+#errorpic p{
+	background-color: lightgrey;
+	color: red;
+	width: 200px;
+	margin: auto;
+}

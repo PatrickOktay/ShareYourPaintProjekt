@@ -5,7 +5,7 @@
 		<br>
 		<input type="password" id="logpassword" name="logpassword" placeholder="Password" required="true">
 		<br>
-		<button type="submit">Log In</button>
+		<button type="submit">Log in</button>
 	</form>
 </div>
 </body>

@@ -1,12 +1,12 @@
 <?php
-
+// Verbindung mit Datenbankbenutzer
 return array(
 
     'database' => array(
         'host' => 'localhost',
-        'username' => 'syp',
-        'password' => 'pflaster',
-        'database' => 'shareyourpaintdb',
+        'username' => 'bayrecsql1',
+        'password' => 'Nein12',
+        'database' => 'bayrecsql1',
     ),
 
 );

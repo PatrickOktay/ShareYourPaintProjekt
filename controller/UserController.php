@@ -7,23 +7,25 @@ require_once 'model/UserModel.php';
  */
 class UserController
 {
+    // Standard View
     public function index()
     {
         header("Location: /User/me");
     }
-
+    //Führt zur register Seite
     public function register()
     {
         $view = new View('user_register');
         $view->display();
     }
-
+    //Führt zur login Seite
     public function login()
     {
         $view = new View('user_login');
         $view->display();
     }
-
+    //Führt zur Standard Seite
+    //zerstört und beendet die Session
     public function logout()
     {
         session_destroy();
@@ -31,7 +33,8 @@ class UserController
         $view = new View('default_index');
         $view->display();
     }
-
+    //Überprüft die Eingaben
+    //Führt zum sql Statement wo die User in die Datenbank gespeichert werden
     public function saveUser()
     {
         $username = htmlspecialchars($_POST['username']);
@@ -53,7 +56,7 @@ class UserController
         }
 
         $check = new UserModel();
-
+        //führt zum sql Statement wo der User gesucht wird
         if ($check->checkexist($username))
         {
             $userModel = new UserModel();
@@ -62,6 +65,7 @@ class UserController
             $view = new View('user_me');
             $view->display();
         }
+        //wenn es schon einen User mit dem gleichen Namen gibt
         else
         {
             echo "<div id=\"errorregister\"><p>That username alreasy exists. Please choose another one.</p></div>";
@@ -69,7 +73,7 @@ class UserController
             $view->display();
         }
     }
-
+    //führt zum sql Statement wo überprüft wird ob der User in der Datenbank existiert
     public function loginUser()
     {
         $username = htmlspecialchars($_POST['loginname']);
@@ -80,8 +84,6 @@ class UserController
 
         if(isset($_SESSION["user"]))
         {
-            //$view = new View('user_me');
-            //$view->display();
             header("Location: /User/me");
         }
         else
@@ -90,9 +92,10 @@ class UserController
             $view->display();
         }
     }
-
+    //die Seite me wird aufgerufen
     public function me()
     {
+        //wenn der User eingeloggt ist
         if(isset($_SESSION["user"]))
         {
             $userModel = new UserModel();
@@ -103,13 +106,14 @@ class UserController
             $view = new View('user_me');
             $view->display();
         }
+        //wenn er nicht eingeloggt ist
         else
         {
             $view = new View('user_login');
             $view->display();
         }
     }
-
+    //führt zum sql Statement alle User gesucht werden
     public function others()
     {
         $userModel = new UserModel();
@@ -118,8 +122,10 @@ class UserController
         $view = new View('user_others');
         $view->footer();
     }
+    //führt zum sql Statement wo die User Beschreibung geändert wird
     public function changedescription()
     {
+        //wenn der User angemeldet ist
         if(isset($_SESSION["user"]))
         {
             $description=htmlspecialchars($_POST["description"]);
@@ -128,6 +134,7 @@ class UserController
             $view = new View('user_me');
             $view->display();
         }
+        // wenn er nicht angemeldet ist
         else
         {
             $view = new View('user_login');
